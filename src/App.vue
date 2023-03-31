@@ -2,7 +2,7 @@
   <TheHeader/>
   <SearchBar @clickOnSearch="getData()"/>
 
-  <CardList/>
+  <CardList :chose="'movie'"/>
 </template>
 
 <script>
@@ -32,7 +32,7 @@
         .then(response => {
           this.store.fullData = response.data.results;
         })
-        
+        console.log('invocata getData: error '+!this.store.fullData)
       },
       generateApiUrl(){
         let apiUrl = '';
