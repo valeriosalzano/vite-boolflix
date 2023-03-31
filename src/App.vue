@@ -6,6 +6,7 @@
 </template>
 
 <script>
+  import axios from 'axios';
   // store.js
   import { store } from './store/store.js';
   // components
@@ -27,7 +28,11 @@
     },
     methods: {
       getData(){
-        this.generateApiUrl();
+        axios.get(this.generateApiUrl())
+        .then(response => {
+          this.store.fullData = response.data.results;
+        })
+        
       },
       generateApiUrl(){
         let apiUrl = '';
@@ -56,7 +61,7 @@
             apiUrl += `${key}=${this.store.search.queries[key]}`;
           }
         });
-        console.log(apiUrl)
+        console.log('invocata generateApiUrl: '+apiUrl)
         return apiUrl;
       }
     },
