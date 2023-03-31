@@ -1,8 +1,8 @@
 <template>
   <div class="card-list">
     <h2 v-if="chose =='movie'">Movies</h2>
-    <ul>
-      <li v-for="card in store.fullData">
+    <ul class="cards-container">
+      <li v-for="card in store.fullData" class="card-container">
         <card :cardData = "card" :chose="chose"/>
       </li>
     </ul>
@@ -31,5 +31,13 @@
 </script>
 
 <style lang="scss" scoped>
-  
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+
+  .card-container {
+    width: 25%;
+    padding: 0.5rem 1rem;
+  }
+}
 </style>
