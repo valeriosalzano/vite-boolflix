@@ -6,9 +6,9 @@
 
 <script>
 
-export default {
-  name: 'card-list'
-}
+  export default {
+    name: 'card-list'
+  }
 </script>
 
 <style lang="scss" scoped>

@@ -5,9 +5,9 @@
 </template>
 
 <script>
-export default {
+  export default {
   name: 'the-header'
-}
+  }
 </script>
 
 <style lang="scss" scoped>
