@@ -6,10 +6,12 @@ export const store = reactive({
     movieData : [],
     tvData : [],
   },
+  api_config: {},
   api_token: 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4OTVjNzQxOTQ4N2MyYjhmZWZiOTI4ODMxNDExODYyNCIsInN1YiI6IjY0MjZhYzNlYzA0NDI5MDI2YjEyYTU4NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.SIwOhoV_DieKbKTS4ENkqqcaaQkrd8oOpOPEoBNx03w',
   params : {
-    // api_key: '895c7419487c2b8fefb9288314118624',
+    api_key: '895c7419487c2b8fefb9288314118624',
     query: '',
     language: 'it-IT',
-  }
+  },
+  last_query: '',
 });

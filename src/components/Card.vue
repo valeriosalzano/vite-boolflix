@@ -1,18 +1,20 @@
 <template>
   <div class="card">
-
+    <div class="cover-container">
+      <img :src="cardInfo.image" :alt="'cover di '+cardInfo.title">
+    </div>
     <h3>{{ cardInfo.title }}</h3>
     <h5>{{ cardInfo.original_title }}</h5>
-    <div> <img :src="`https://flagsapi.com/${cardInfo.language}/flat/64.png`" :alt="this.cardInfo.language"> </div>
+    <div class="flag-container"> <img :src="`https://flagsapi.com/${cardInfo.language}/flat/64.png`" :alt="this.cardInfo.language"> </div>
     <div>Rating: 
       <CardStars v-if="cardData.vote_count" :vote_value="cardData.vote_average"/>
       <span v-else>No votes</span>
-    </div> 
-
+    </div>
   </div>
 </template>
 
 <script>
+
 import CardStars from './CardStars.vue';
 
   export default {
@@ -23,6 +25,7 @@ import CardStars from './CardStars.vue';
     props: {
         cardData: Object,
         cardCategory: String,
+        partialImgUrl: String,
     },
     computed: {
       cardInfo() {
@@ -34,6 +37,7 @@ import CardStars from './CardStars.vue';
                   original_title: this.cardData.original_title,
                   language: this.languageFix(this.cardData.original_language),
                   stars: this.cardData.vote_average,
+                  image: this.partialImgUrl + this.cardData.poster_path,
               };
             case "tv":
               return card = {
@@ -41,6 +45,7 @@ import CardStars from './CardStars.vue';
                   original_title: this.cardData.original_name,
                   language: this.languageFix(this.cardData.original_language),
                   stars: this.cardData.vote_average,
+                  image: this.partialImgUrl + this.cardData.poster_path,
               };
             default: return console.log("computed:cardInfo default!");
           }
@@ -57,7 +62,7 @@ import CardStars from './CardStars.vue';
                 default:
                     return language;
             }
-        }
+        },
     },
     components: { CardStars }
 }
@@ -65,6 +70,7 @@ import CardStars from './CardStars.vue';
 
 <style lang="scss" scoped>
   .card {
+    text-align: center;
     height: 100%;
     padding: 0.5rem 1rem;
     border: 1px solid white;
@@ -72,6 +78,10 @@ import CardStars from './CardStars.vue';
 
     * {
       margin-bottom: 0.5rem;
+    }
+
+    .cover-container img {
+      width: 100%;
     }
   }
 </style>
