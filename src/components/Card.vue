@@ -3,9 +3,11 @@
 
     <h3>{{ cardInfo.title }}</h3>
     <h5>{{ cardInfo.original_title }}</h5>
-    <div> <img :src="`https://flagsapi.com/${this.cardInfo.language.toUpperCase()}/flat/64.png`" :alt="this.cardInfo.language"> </div>
-    <div>{{ cardInfo.stars }}</div>
-    <CardStars :vote_value="this.cardData.vote_average"/>
+    <div> <img :src="`https://flagsapi.com/${cardInfo.language}/flat/64.png`" :alt="this.cardInfo.language"> </div>
+    <div>Rating: 
+      <CardStars v-if="cardData.vote_count" :vote_value="cardData.vote_average"/>
+      <span v-else>No votes</span>
+    </div> 
 
   </div>
 </template>
@@ -20,33 +22,38 @@ import CardStars from './CardStars.vue';
     },
     props: {
         cardData: Object,
-        chose: String,
+        cardCategory: String,
     },
     computed: {
-        cardInfo() {
-            let card = {};
-            switch (this.chose) {
-                case "movie":
-                    return card = {
-                        title: this.cardData.title,
-                        original_title: this.cardData.original_title,
-                        language: this.languageFix(this.cardData.original_language),
-                        stars: this.voteFix(this.cardData.vote_average),
-                    };
-                default: return console.log("computed:cardInfo !");
-            }
+      cardInfo() {
+          let card = {};
+          switch (this.cardCategory) {
+            case "movie":
+              return card = {
+                  title: this.cardData.title,
+                  original_title: this.cardData.original_title,
+                  language: this.languageFix(this.cardData.original_language),
+                  stars: this.cardData.vote_average,
+              };
+            case "tv":
+              return card = {
+                  title: this.cardData.name,
+                  original_title: this.cardData.original_name,
+                  language: this.languageFix(this.cardData.original_language),
+                  stars: this.cardData.vote_average,
+              };
+            default: return console.log("computed:cardInfo default!");
+          }
         }
     },
     methods: {
-        voteFix(vote) {
-            return Math.ceil(vote / 2);
-        },
         languageFix(language) {
+          language = language.toUpperCase();
             switch (language) {
-                case "en":
-                    return "gb";
-                case "ja":
-                    return "jp";
+                case "EN":
+                    return "GB";
+                case "JA":
+                    return "JP";
                 default:
                     return language;
             }

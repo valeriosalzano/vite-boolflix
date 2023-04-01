@@ -1,6 +1,6 @@
 <template>
   <div class="search-bar">
-    <input type="text" placeholder="Scrivi qualcosa" v-model="store.search.queries.query">
+    <input type="text" placeholder="Scrivi qualcosa" v-model="store.params.query">
     <button type="button" @click="$emit('clickOnSearch')">Cerca</button>
   </div>
 </template>

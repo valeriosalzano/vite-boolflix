@@ -22,6 +22,9 @@
 </script>
 
 <style lang="scss" scoped>
+.card-stars {
+  display: inline-block;
+}
 .stars-container {
   position: relative;
   display: inline-block;
@@ -32,5 +35,9 @@
   left: 0;
   overflow: hidden;
   white-space: nowrap;
+}
+
+i {
+  color: gold;
 }
 </style>

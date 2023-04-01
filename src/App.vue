@@ -1,8 +1,10 @@
 <template>
   <TheHeader/>
   <SearchBar @clickOnSearch="getData()"/>
-
-  <CardList :chose="'movie'"/>
+  
+  <div v-for="category in store.categories" class="container">
+    <CardList :cardListCategory="category"/>
+  </div>
 </template>
 
 <script>
@@ -28,42 +30,22 @@
     },
     methods: {
       getData(){
-        axios.get(this.generateApiUrl())
-        .then(response => {
-          this.store.fullData = response.data.results;
-        })
-        console.log('invocata getData: error '+!this.store.fullData)
-      },
-      generateApiUrl(){
-        let apiUrl = '';
-
-        // path check
-        Object.keys(this.store.search.path).forEach((key,index) => {
-          if (key !== ''){
-            apiUrl += index? `/${this.store.search.path[key]}` : this.store.search.path.api_link;
-          }
-        });
-        
-        
-        // queries check
-        let modifiedUrl = false;
-        Object.keys(this.store.search.queries).forEach(key => {
-          
-          // se il valore della key è una stringa vuota non aggiungo filtri all'url
-          if (this.store.search.queries[key] !== ''){
-            // alla prima aggiunta inserisco il "?" poi "&" ai seguenti nell'url
-            if (modifiedUrl == false){
-              apiUrl += '?';
-              modifiedUrl = true;
-            } else {
-              apiUrl += '&';
+        this.store.categories.forEach(category => {
+          axios(
+            {
+              method: 'get',
+              url: `https://api.themoviedb.org/3/search/${category}`,
+            
+              headers: {
+              'Authorization': `Bearer ${this.store.api_token}`
+              },
+              params : this.store.params,
             }
-            apiUrl += `${key}=${this.store.search.queries[key]}`;
-          }
-        });
-        console.log('invocata generateApiUrl: '+apiUrl)
-        return apiUrl;
-      }
+          ).then (response =>{
+            this.store.data[`${category}Data`] = response.data.results;
+          })
+        })
+      },
     },
   }
 </script>

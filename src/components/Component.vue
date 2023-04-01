@@ -1,3 +1,5 @@
+<!-- QUICK COPY
+
 <template>
   <div class="component">
     
@@ -13,3 +15,5 @@
 <style lang="scss" scoped>
   
 </style>
+
+-->

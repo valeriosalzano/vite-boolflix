@@ -1,9 +1,9 @@
 <template>
   <div class="card-list">
-    <h2 v-if="chose =='movie'">Movies</h2>
-    <ul class="cards-container">
-      <li v-for="card in store.fullData" class="card-container">
-        <card :cardData = "card" :chose="chose"/>
+    <h2>{{cardListInfo.title}}</h2>
+    <ul class="cards-container" v-if="store.data[`${cardListCategory}Data`].length">
+      <li v-for="card in this.store.data[`${cardListCategory}Data`]" class="card-container">
+        <card :cardData="card" :cardCategory="cardListCategory"/>
       </li>
     </ul>
   </div>
@@ -25,7 +25,23 @@
       }
     },
     props: {
-      chose : String,
+      cardListCategory : String,
+    },
+    computed: {
+      cardListInfo(){
+        let cardList = {};
+
+        switch (this.cardListCategory){
+          case 'movie':
+            return cardList = {
+              title: 'Movies'
+            };
+          case 'tv':
+            return cardList = {
+              title: 'Tv Series'
+            }
+        }
+      }
     }
   }
 </script>
