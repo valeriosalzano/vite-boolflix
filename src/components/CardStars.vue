@@ -14,7 +14,7 @@
 
 <script>
   export default {
-    name: 'card-stars',
+    name: 'card stars',
     props: {
       vote_value: Number,
     }
@@ -30,14 +30,15 @@
   display: inline-block;
 }
 .solid-stars {
-  position: absolute;
-  top: 0;
-  left: 0;
   overflow: hidden;
   white-space: nowrap;
 }
-
-i {
+.empty-stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.solid-stars i {
   color: gold;
 }
 </style>

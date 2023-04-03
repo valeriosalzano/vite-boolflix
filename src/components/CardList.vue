@@ -3,7 +3,7 @@
     <h2>{{cardListInfo.title}}</h2>
     <ul class="cards-container" v-if="store.data[`${cardListCategory}Data`].length">
       <li v-for="card in this.store.data[`${cardListCategory}Data`]" class="card-container">
-        <card :cardData="card" :cardCategory="cardListCategory" :partialImgUrl="partialImgUrl"/>
+        <SingleCard :cardData="card" :cardCategory="cardListCategory" :partialImgUrl="partialImgUrl"/>
       </li>
     </ul>
   </div>
@@ -12,12 +12,12 @@
 <script>
   import { store } from '../store/store.js';
 
-  import Card from './Card.vue';
+  import SingleCard from './SingleCard.vue';
 
   export default {
-    name: 'card-list',
+    name: 'card list',
     components: {
-      Card,
+      SingleCard,
     },
     data() {
       return {
@@ -33,13 +33,11 @@
 
         switch (this.cardListCategory){
           case 'movie':
-            return cardList = {
-              title: 'Movies'
-            };
+            cardList.title= 'Movies';
+            return cardList;
           case 'tv':
-            return cardList = {
-              title: 'Tv Series'
-            }
+            cardList.title= 'Tv Series';
+            return cardList;
         }
       },
       partialImgUrl(){

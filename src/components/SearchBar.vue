@@ -9,7 +9,7 @@
   import { store } from '../store/store.js';
 
   export default {
-    name: 'search-bar',
+    name: 'search bar',
     data() {
       return {
         store,
