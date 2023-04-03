@@ -33,12 +33,20 @@
 
         switch (this.cardListCategory){
           case 'movie':
-            cardList.title= 'Movies';
-            return cardList;
+            cardList.title = 'Movies';
+            break;
           case 'tv':
-            cardList.title= 'Tv Series';
-            return cardList;
+            cardList.title = 'Tv Series';
+            break;
+          default :
+            console.log("computed:cardListInfo default!");
         }
+
+        if(this.store.last_query == ''){
+          cardList.title = 'Trending '+cardList.title;
+        }
+
+        return cardList;
       },
       partialImgUrl(){
         let imgUrl = this.store.api_config.images.secure_base_url;
@@ -53,13 +61,42 @@
 </script>
 
 <style lang="scss" scoped>
+h2 {
+    font-size: 2.5rem;
+    margin: 2rem 1rem;
+}
 .cards-container {
   display: flex;
   flex-wrap: wrap;
-
-  .card-container {
-    width: 25%;
+}
+.card-container {
+    width: 100%;
     padding: 0.5rem 1rem;
+  }
+
+// tablet view
+@media screen and (min-width: 768px) {
+  .card-container {
+    width: calc(100% / 2);
+  }
+}
+// desktop view
+@media screen and (min-width: 992px) {
+  .card-container {
+    width: calc(100% / 3);
+  }
+}
+
+// l desktop view
+@media screen and (min-width: 1200px) {
+  .card-container {
+    width: calc(100% / 4);
+  }
+}
+// xl desktop view
+@media screen and (min-width: 1400px) {
+  .card-container {
+    width: calc(100% / 5);
   }
 }
 </style>

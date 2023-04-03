@@ -38,7 +38,11 @@
   top: 0;
   left: 0;
 }
-.solid-stars i {
-  color: gold;
+i {
+  color: crimson;
 }
+.empty-stars i {
+  color: white;
+}
+
 </style>

@@ -1,14 +1,22 @@
 <template>
-  <TheHeader/>
-  <SearchBar @clickOnSearch="getData()"/>
+  <header>
+    <div class="container">
+      <TheHeader/>
+      <SearchBar @clickOnSearch="getDataCheck()"/>
+    </div>
+  </header>
   
-  <div v-for="category in store.categories" class="container">
-    <CardList :cardListCategory="category"/>
-  </div>
+  <main class="container">
+    <div v-for="category in store.categories">
+      <CardList :cardListCategory="category"/>
+    </div>
+  </main>
+  
 </template>
 
 <script>
   import axios from 'axios';
+  import "@fontsource/open-sans-condensed";
   // store.js
   import { store } from './store/store.js';
   // components
@@ -30,21 +38,17 @@
     },
     mounted(){
       this.getApiConfig();
+      this.getTrendingData();
     }
     ,
     methods: {
-      getData(){
-        if(!this.getDataCheck()){
-          console.log('Check not passed')
-          return;
-        }
-
+      getData(firstQueryPath, secondQueryPath){
         this.store.categories.forEach(category => {
           axios(
             {
               method: 'get',
-              url: `https://api.themoviedb.org/3/search/${category}`,
-            
+              url: `${firstQueryPath}/${category}${secondQueryPath}`,
+              baseURL: 'https://api.themoviedb.org/3',
               headers: {
               'Authorization': `Bearer ${this.store.api_token}`,
               'Content-Type': 'application/json;charset=utf-8'
@@ -53,22 +57,24 @@
             }
           ).then (response =>{
             this.store.data[`${category}Data`] = response.data.results;
+            this.store.params.query = '';
           })
         })
       },
       getDataCheck(){
         let current_query = this.store.params.query.toLowerCase().trim();
+
         if(!current_query){
           console.log('void query value')
-          return false;
-        }
-        if(this.store.last_query == current_query){
+        } else if (this.store.last_query == current_query){
           console.log('Same request, different query value required');
-          return false;
         } else {
           this.store.last_query = current_query;
-          return true;
+          this.getData('/search','');
         }
+      },
+      getTrendingData(){
+        this.getData('/trending','/week')
       },
       getApiConfig(){
         axios.get(`https://api.themoviedb.org/3/configuration?api_key=${this.store.params.api_key}`)
@@ -82,11 +88,5 @@
 
 <style lang="scss">
 @use './styles/general.scss';
-@use './styles/partials/variables' as *;
 
-body {
-  background-color: $page-bg-color;
-  color: $page-text-color;
-}
-  
 </style>

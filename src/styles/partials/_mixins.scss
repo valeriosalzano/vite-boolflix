@@ -33,3 +33,42 @@
     transform: rotateY(180deg);
   }
 }
+
+@mixin input-group(){
+  height: 100%;
+  border: 3px solid white;
+  border-radius: 1rem;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  & >* {
+    padding: 0.5rem 1rem;
+    background-color: black;
+    color: white;
+    border: none;
+  }
+  
+
+  & input {
+    margin-left: 0.5rem;
+    height: 100%;
+    flex-grow: 1;
+    margin-left: 0.5rem;
+
+    &:focus {
+      outline: none;
+    }
+
+    & ::placeholder {
+      color: lightgray;
+    }
+  }
+
+  & button {
+    height: 100%;
+    cursor: pointer;
+    border-right: 1px solid white;
+  }
+}
