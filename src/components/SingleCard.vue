@@ -12,6 +12,9 @@
           <CardStars v-if="cardData.vote_count" :vote_value="cardData.vote_average"/>
           <span v-else>No votes</span>
         </div>
+        <div class="overview-container">
+          <p>Overview: {{ cardInfo.overview }}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -44,6 +47,7 @@ import CardStars from './CardStars.vue';
             language: this.languageFix(this.cardData.original_language),
             stars: this.cardData.vote_average,
             image: this.partialImgUrl + this.cardData.poster_path,
+            overview: this.cardData.overview,
           };
 
           switch (this.cardCategory) {
@@ -87,9 +91,12 @@ import CardStars from './CardStars.vue';
     width: 100%;
     aspect-ratio: 342/500;
     text-align: center;
-
     &.flip-card{
       @include mixins.flip-card();
+    }
+    .card-container {
+      border: 1px solid white;
+      height: 100%;
     }
     .cover-container img {
       object-fit: cover;
@@ -98,6 +105,15 @@ import CardStars from './CardStars.vue';
     }
     .flag-container *{
       vertical-align: middle;
+    }
+
+    .text-container {
+      overflow: hidden;
+
+      & .overview-container {
+        max-height: 200px;
+        overflow: scroll;
+      } 
     }
   }
 </style>
