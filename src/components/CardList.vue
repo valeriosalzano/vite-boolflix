@@ -8,9 +8,13 @@
           :cardCategory="cardListCategory" 
           :partialImgUrl="partialImgUrl"
           :cardCastData="store.data[`${cardListCategory}Credits`][index]"
+          :genresData="store[`${cardListCategory}Genres`]"
           />
       </li>
     </ul>
+    <div v-else class="no-results">
+      Nessun risultato trovato.
+    </div>
   </div>
 </template>
 
@@ -59,11 +63,12 @@
       },
       // gestione dell'url parziale per le cover
       partialImgUrl(){
-        let imgUrl = this.store.api_config.images.secure_base_url;
-
-        // si aggiungerà un controllo delle dimensioni della finestra in seguito
-        imgUrl +=`${this.store.api_config.images.poster_sizes[3]}/`
-
+        let imgUrl = '';
+        if(this.store.api_config){
+          imgUrl = this.store.api_config.images.secure_base_url;
+          // si aggiungerà un controllo delle dimensioni della finestra in seguito
+          imgUrl +=`${this.store.api_config.images.poster_sizes[3]}/`
+        }
         return imgUrl
       }
     },
@@ -83,7 +88,10 @@ h2 {
     width: 100%;
     padding: 0.5rem 1rem;
   }
-
+.no-results{
+  font-size: 2rem;
+  margin-left: 2rem;
+}
 // tablet view
 @media screen and (min-width: 768px) {
   .card-container {

@@ -18,8 +18,11 @@
           <CardStars v-if="cardData.vote_count" :vote_value="cardData.vote_average"/>
           <span v-else>No votes</span>
         </div>
-        <div class="cast">
+        <div v-if="cardInfo.cast" class="cast">
           <span>Cast : {{ cardInfo.cast }}.</span>
+        </div>
+        <div class="genres">
+          Genres: {{ cardInfo.genres }}.
         </div>
         <div v-if="cardInfo.overview" class="overview-container">
           <p> {{ cardInfo.overview }}</p>
@@ -49,6 +52,7 @@ import CardStars from './CardStars.vue';
         cardCategory: String,
         partialImgUrl: String,
         cardCastData: Array,
+        genresData: Array,
     },
     computed: {
       // gestione dei dati in cardData
@@ -63,6 +67,7 @@ import CardStars from './CardStars.vue';
           image: this.partialImgUrl + data.poster_path,
           overview: data.overview,
           cast: this.getCast(),
+          genres: this.getGenres(),
         };
         // dati differenti in base alla categoria
         switch (this.cardCategory) {
@@ -96,9 +101,13 @@ import CardStars from './CardStars.vue';
         language = language.toUpperCase();
           switch (language) {
             case "EN":
-                return "GB";
+              return "GB";
             case "JA":
-                return "JP";
+              return "JP";
+            case "KO":
+              return "KR";
+            case "ZH":
+              return "CN"
             default:
                 return language;
         }
@@ -119,6 +128,14 @@ import CardStars from './CardStars.vue';
           return cast
         }
       },
+      // funzione che genera una stringa con i generi della card
+      getGenres(){
+        let cardGenres = this.cardData.genre_ids;
+        // filtro i generi prendendo quelli inclusi nella mia card, poi sostituisco gli id con il nome
+        cardGenres = this.genresData.filter(genre => cardGenres.includes(genre.id)).map(element => element.name);
+        let genresString = cardGenres.join(', ');
+        return genresString;
+      }
     },
 }
 </script>
@@ -173,12 +190,20 @@ import CardStars from './CardStars.vue';
           vertical-align: top;
         }
       }
+
+      .cast {
+        color: gray;
+      }
+
+      .genres {
+        color: gray;
+      }
       .overview-container {
         overflow-y: auto;
         margin: 0.5rem 0;
         padding: 0 0.5rem;
         min-height: 100px;
-      } 
+      }
     }
   }
 </style>

@@ -2,7 +2,7 @@
   <div class="search-bar">
     <div class="input-group">
       <button type="button" @click="$emit('clickOnSearch')"><i class="fa-solid fa-magnifying-glass"></i></button>
-      <input type="text" placeholder="Scrivi qualcosa..." v-model="store.params.query" @keyup.enter="enterOnSearch">      
+      <input type="text" placeholder="Scrivi qualcosa..." v-model="store.query" @keyup.enter="enterOnSearch">      
     </div>
     
   </div>

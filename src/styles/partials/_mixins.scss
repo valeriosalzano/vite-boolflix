@@ -37,7 +37,7 @@
 @mixin input-group(){
   height: 100%;
   border: 3px solid white;
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   overflow: hidden;
   display: flex;
   justify-content: space-between;
@@ -70,5 +70,14 @@
     height: 100%;
     cursor: pointer;
     border-right: 1px solid white;
+
+    &:hover {
+      background-color: white;
+
+      i{
+        background-color: white;
+        color: black;
+      }
+    }
   }
 }
