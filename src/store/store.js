@@ -19,6 +19,9 @@ export const store = reactive({
       language: 'it-IT',
     },
   },
+
   query: '',
   last_query: '',
+  movieSelected: '',
+  tvSelected: '',
 });

@@ -1,9 +1,16 @@
 <template>
   <div class="card-list">
-    <h2>{{cardListInfo.title}}</h2>
+    <div class="card-list-header">
+      <h2>{{cardListInfo.title}}</h2>
+      <select v-model="store[`${cardListCategory}Selected`]">
+        <option value=""> All </option>
+        <option v-for="genre in store[`${cardListCategory}Genres`]" :value="genre.id">{{ genre.name }}</option>
+      </select>
+    </div>
+
     <ul class="cards-container" v-if="store.data[`${cardListCategory}Data`].length">
-      <li v-for="(card,index) in store.data[`${cardListCategory}Data`]" class="card-container">
-        <SingleCard 
+      <li v-show="store[`${cardListCategory}Selected`] == '' || card.genre_ids.includes(store[`${cardListCategory}Selected`])" v-for="(card,index) in store.data[`${cardListCategory}Data`]" class="card-container">
+        <SingleCard
           :cardData="card" 
           :cardCategory="cardListCategory" 
           :partialImgUrl="partialImgUrl"
@@ -76,10 +83,22 @@
 </script>
 
 <style lang="scss" scoped>
-h2 {
+@use '../styles/partials/mixins';
+.card-list-header {
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
     font-size: 2.5rem;
     margin: 2rem 1rem;
+  }
+  select {
+    @include mixins.select();
+  }
 }
+
 .cards-container {
   display: flex;
   flex-wrap: wrap;

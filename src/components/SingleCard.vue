@@ -19,9 +19,9 @@
           <span v-else>No votes</span>
         </div>
         <div v-if="cardInfo.cast" class="cast">
-          <span>Cast : {{ cardInfo.cast }}.</span>
+          Cast : {{ cardInfo.cast }}.
         </div>
-        <div class="genres">
+        <div v-if="cardInfo.genres" class="genres">
           Genres: {{ cardInfo.genres }}.
         </div>
         <div v-if="cardInfo.overview" class="overview-container">

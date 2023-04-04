@@ -81,3 +81,16 @@
     }
   }
 }
+
+@mixin select(){
+  border: 3px solid white;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: black;
+  color: white;
+
+  option {
+    padding: 0.5rem 1rem;
+  }
+}
