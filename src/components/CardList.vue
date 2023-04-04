@@ -2,8 +2,13 @@
   <div class="card-list">
     <h2>{{cardListInfo.title}}</h2>
     <ul class="cards-container" v-if="store.data[`${cardListCategory}Data`].length">
-      <li v-for="card in this.store.data[`${cardListCategory}Data`]" class="card-container">
-        <SingleCard :cardData="card" :cardCategory="cardListCategory" :partialImgUrl="partialImgUrl"/>
+      <li v-for="(card,index) in store.data[`${cardListCategory}Data`]" class="card-container">
+        <SingleCard 
+          :cardData="card" 
+          :cardCategory="cardListCategory" 
+          :partialImgUrl="partialImgUrl"
+          :cardCastData="store.data[`${cardListCategory}Credits`][index]"
+          />
       </li>
     </ul>
   </div>
@@ -28,9 +33,11 @@
       cardListCategory : String,
     },
     computed: {
+      // gestione dei dati della cardlist
       cardListInfo(){
         let cardList = {};
 
+        // dati non condivisi dalle categorie diverse
         switch (this.cardListCategory){
           case 'movie':
             cardList.title = 'Movies';
@@ -42,16 +49,19 @@
             console.log("computed:cardListInfo default!");
         }
 
+        // gestione schermata di apertura con i trending week
         if(this.store.last_query == ''){
           cardList.title = 'Trending '+cardList.title;
         }
 
+        // object finale di ritorno
         return cardList;
       },
+      // gestione dell'url parziale per le cover
       partialImgUrl(){
         let imgUrl = this.store.api_config.images.secure_base_url;
 
-        // will introduce a window size check next
+        // si aggiungerà un controllo delle dimensioni della finestra in seguito
         imgUrl +=`${this.store.api_config.images.poster_sizes[3]}/`
 
         return imgUrl
