@@ -2,30 +2,34 @@
   <div class="card" :class="cardData.poster_path? 'flip-card' : 'only-text'">
     <div class="card-container">
 
-      <div class="cover-container">
-        <img v-show="cardData.poster_path" :src="cardInfo.image" :alt="'cover di '+cardInfo.title">
+      <div v-if="cardData.poster_path" class="cover-container">
+        <img :src="cardInfo.image" :alt="'cover di '+cardInfo.title">
       </div>
 
-      <div class="text-container">
-        <h3 class="title">{{ cardInfo.title }}</h3>
-        <h5 v-if="cardInfo.title != cardInfo.original_title" class="original-title">{{ cardInfo.original_title }}</h5>
-        <div class="flag-container language">
-          <span>Language : </span> 
-          <img :src="`https://flagsapi.com/${cardInfo.language}/flat/64.png`" :alt="computedFlagAlt"> 
+      <div class="text-container" @click="clickOnCard">
+        <div v-show="!clickedCard" class="pageOne">
+          <h3 class="title">{{ cardInfo.title }}</h3>
+          <h5 v-if="cardInfo.title != cardInfo.original_title" class="original-title">{{ cardInfo.original_title }}</h5>
+          <div class="flag-container language">
+            <span>Language : </span> 
+            <img :src="`https://flagsapi.com/${cardInfo.language}/flat/64.png`" :alt="computedFlagAlt"> 
+          </div>
+          <div class="rating"> 
+            <span> Rating : </span> 
+            <CardStars v-if="cardData.vote_count" :vote_value="cardData.vote_average"/>
+            <span v-else>No votes</span>
+          </div>
+          <div v-if="cardInfo.cast" class="cast">
+            Cast : {{ cardInfo.cast }}.
+          </div>
+          <div v-if="cardInfo.genres" class="genres">
+            Genres: {{ cardInfo.genres }}.
+          </div>
         </div>
-        <div class="rating"> 
-          <span> Rating : </span> 
-          <CardStars v-if="cardData.vote_count" :vote_value="cardData.vote_average"/>
-          <span v-else>No votes</span>
-        </div>
-        <div v-if="cardInfo.cast" class="cast">
-          Cast : {{ cardInfo.cast }}.
-        </div>
-        <div v-if="cardInfo.genres" class="genres">
-          Genres: {{ cardInfo.genres }}.
-        </div>
-        <div v-if="cardInfo.overview" class="overview-container">
-          <p> {{ cardInfo.overview }}</p>
+        <div v-show="clickedCard" class="pageTwo">
+          <div v-if="cardInfo.overview" class="overview-container">
+            <p> {{ cardInfo.overview }}</p>
+          </div>
         </div>
       </div>
 
@@ -45,6 +49,7 @@ import CardStars from './CardStars.vue';
     data() {
       return {
         languages,
+        clickedCard : false,
       }
     },
     props: {
@@ -80,7 +85,6 @@ import CardStars from './CardStars.vue';
           default: console.log("computed:cardInfo default!");
         }
 
-        // carta completata
         return card;
 
         },
@@ -135,6 +139,12 @@ import CardStars from './CardStars.vue';
         cardGenres = this.genresData.filter(genre => cardGenres.includes(genre.id)).map(element => element.name);
         let genresString = cardGenres.join(', ');
         return genresString;
+      },
+      // funzione che registra il click sulla card per mostrare la pagina 1 o 2 delle info
+      clickOnCard(){
+        if(this.cardInfo.overview){
+          this.clickedCard = !this.clickedCard;
+        }
       }
     },
 }

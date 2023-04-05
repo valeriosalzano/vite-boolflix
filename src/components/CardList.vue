@@ -9,7 +9,7 @@
     </div>
 
     <ul class="cards-container" v-if="store.data[`${cardListCategory}Data`].length">
-      <li v-show="isShowing(card)" v-for="(card,index) in store.data[`${cardListCategory}Data`]" class="card-container">
+      <li v-show="isShowing(card)" v-for="(card,index) in store.data[`${cardListCategory}Data`]" class="card-container" :key="card.id">
         <SingleCard
           :cardData="card" 
           :cardCategory="cardListCategory" 
@@ -94,10 +94,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  padding: 0.5rem 1rem;
 
   h2 {
     font-size: 2.5rem;
-    margin: 2rem 1rem;
+    margin: 2rem 0;
   }
   select {
     @include mixins.select();
