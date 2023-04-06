@@ -24,4 +24,5 @@ export const store = reactive({
   last_query: '',
   movieSelected: '',
   tvSelected: '',
+  mainSelected: '',
 });

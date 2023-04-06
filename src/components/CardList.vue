@@ -2,7 +2,7 @@
   <div class="card-list">
     <div class="card-list-header">
       <h2>{{cardListInfo.title}}</h2>
-      <select v-model="store[`${cardListCategory}Selected`]">
+      <select v-show="store.mainSelected==''" v-model="store[`${cardListCategory}Selected`]">
         <option value=""> All </option>
         <option v-for="genre in store[`${cardListCategory}Genres`]" :value="genre.id">{{ genre.name }}</option>
       </select>
@@ -65,7 +65,6 @@
           cardList.title = 'Trending '+cardList.title;
         }
 
-        // object finale di ritorno
         return cardList;
       },
       // gestione dell'url parziale per le cover
@@ -80,8 +79,14 @@
       }
     },
     methods: {
+      // funzione che calcola se la card sia visibile con il filtro applicato
       isShowing(card){
-        return this.store[`${this.cardListCategory}Selected`] == '' || card.genre_ids.includes(this.store[`${this.cardListCategory}Selected`])
+        if(this.store.mainSelected == ''){
+          return this.store[`${this.cardListCategory}Selected`] == '' || card.genre_ids.includes(this.store[`${this.cardListCategory}Selected`])
+        } else {
+          return card.genre_ids.includes(this.store.mainSelected);
+        }
+        
       }
     }
   }

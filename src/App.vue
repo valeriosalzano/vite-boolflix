@@ -50,7 +50,7 @@
         this.store.categories.forEach(category => {
 
           paramsObject.url = `${firstQueryPath}/${category}${secondQueryPath}`;
-          paramsObject.params.query = this.store.query;
+          this.store.query? paramsObject.params.query = this.store.query : '';
 
           axios(paramsObject)
           .then (response =>{

@@ -6,7 +6,7 @@
         <img :src="cardInfo.image" :alt="'cover di '+cardInfo.title">
       </div>
 
-      <div class="text-container" @click="clickOnCard">
+      <div class="text-container" @click="clickOnCard" @mouseleave="onLeavingCard">
         <div v-show="!clickedCard" class="pageOne">
           <h3 class="title">{{ cardInfo.title }}</h3>
           <h5 v-if="cardInfo.title != cardInfo.original_title" class="original-title">{{ cardInfo.original_title }}</h5>
@@ -145,6 +145,9 @@ import CardStars from './CardStars.vue';
         if(this.cardInfo.overview){
           this.clickedCard = !this.clickedCard;
         }
+      },
+      onLeavingCard(){
+        this.clickedCard = false;
       }
     },
 }
