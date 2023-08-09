@@ -9,7 +9,7 @@
     </div>
 
     <ul class="cards-container" v-if="store.data[`${cardListCategory}Data`].length">
-      <li v-show="isShowing(card)" v-for="(card,index) in store.data[`${cardListCategory}Data`]" class="card-container" :key="card.id">
+      <li v-show="isShowing(card)" v-for="(card,index) in store.data[`${cardListCategory}Data`]" class="card-container" :key="`${card.id}`">
         <SingleCard
           :cardData="card" 
           :cardCategory="cardListCategory" 

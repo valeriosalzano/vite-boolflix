@@ -55,6 +55,7 @@
 @use '../styles/partials/mixins';
 .search-bar {
   display: flex;
+  flex-wrap: wrap;
   align-content: center;
   gap: 1rem;
   height: 50px;
@@ -63,7 +64,6 @@
 }
 .input-group {
   @include mixins.input-group;
-  width: 100%;
 
   & *{
     font-size: 1rem;
